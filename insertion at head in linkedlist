@@ -11,11 +11,60 @@ class node{
         next=NULL;
     }
 };
-void insertdata(node*&head,int data)
+void insertathead(node*&head,int data)
 {
     node*n=new node(data);
     n->next=head;
     head=n;
+}
+int length(node*head)
+{
+    int len=0;
+    while(head!=NULL)
+    {
+        head=head->next;
+        len+=1;
+    }
+    return len;
+}
+void insertattail(node*&head,int data)
+{
+    if(head==NULL)
+    {
+        head=new node(data);
+        return;
+    }
+    node*tail=head;
+    while(tail->next!=NULL)
+    {
+        tail=tail->next;
+    }
+    tail->next=new node(data);
+    return;
+}
+void insertinmiddle(node*&head,int data,int p)
+{
+    if(head==NULL||p==0)
+    {
+        insertathead(head,data);
+    }
+    else if(p>length(head))
+    {
+        insertattail(head,data);
+    }
+    else
+    {
+        int jump=1;
+        node*temp=head;
+        while(jump<=p-1)
+        {
+            temp=temp->next;
+            jump+=1;
+        }
+        node*n=new node(data);
+        n->next=temp->next;
+        temp->next=n;
+    }
 }
 void print(node*head)
 {
@@ -29,8 +78,11 @@ void print(node*head)
 }
 int main() {
     node*head=NULL;
-    insertdata(head,5);
-    insertdata(head,4);
-    insertdata(head,3);
+    insertathead(head,5);
+    insertathead(head,4);
+    insertathead(head,3);
+     insertinmiddle(head,2,7);
+    insertattail(head,6);
+   
     print(head);
 }
